@@ -20,7 +20,7 @@ public class EmployeeDataProducer {
     this.topic = topic;
   }
 
-  public void send(Employee outboundEvent) {
+  public boolean send(Employee outboundEvent) {
 
     var future = this.template.send(topic, outboundEvent);
     future.whenComplete(
@@ -34,5 +34,6 @@ public class EmployeeDataProducer {
             LOGGER.error("Failed to send outbound message error={}", throwable.getMessage());
           }
         });
+    return future.isDone();
   }
 }
