@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: spring-kafka-avro
+
+outbound:
+  topic: EMPLOYEE-DATA-HTTP-IN
