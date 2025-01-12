@@ -1,6 +1,31 @@
 spring:
   application:
     name: spring-kafka-avro
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: EMPLOYEE-HTTP-IN-GROUPID
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "com.pawan07thapa.kafka.spring_kafka_avro.model"
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+    properties:
+      security:
+        protocol: PLAINTEXT
 
-outbound:
-  topic: EMPLOYEE-DATA-HTTP-IN
+logging:
+  level:
+    root: INFO
+
+topic:
+  outbound: EMPLOYEE-DATA-HTTP-IN
+  inbound: EMPLOYEE-DATA-HTTP-IN
